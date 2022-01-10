@@ -10,13 +10,13 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/docongminh/template-library-typescript.git"
+    "url": "git+https://github.com/docongminh/base-core-wallet.git"
   },
   "keywords": [],
   "bugs": {
-    "url": "https://github.com/docongminh/template-library-typescript/issues"
+    "url": "https://github.com/docongminh/base-core-wallet/issues"
   },
-  "homepage": "https://github.com/docongminh/template-library-typescript#readme",
+  "homepage": "https://github.com/docongminh/base-core-wallet/tree/master/packages/console/#readme",
   "files": [
     "dist"
   ],
