@@ -1,20 +1,46 @@
 {
   "compilerOptions": {
-    "target": "ESNext",
-    "module": "ESNext", // commonjs
-    "declarationDir": "./types",
+    "allowJs": false,
+    "allowSyntheticDefaultImports": true,
+    "alwaysStrict": true,
+    "composite": true,
     "declaration": true,
-    "outDir": "./dist",
-    "rootDir": "./src",
-    "strict": true,
-    "noImplicitAny": true,
-    "baseUrl": "./",
-    "paths": {"~/*": ["src/*"]},
+    "declarationMap": true,
+    "downlevelIteration": true,
+    "emitDecoratorMetadata": true,
     "esModuleInterop": true,
-    "moduleResolution": "node"
+    "experimentalDecorators": true,
+    "forceConsistentCasingInFileNames": true,
+    "importHelpers": true,
+    "lib": [
+      "es2015",
+      "es5",
+      "dom",
+      "esnext.asynciterable"
+    ],
+    "module": "ESNext",
+    "moduleResolution": "node",
+    "noFallthroughCasesInSwitch": true,
+    "noImplicitAny": false,
+    "noImplicitReturns": true,
+    "noImplicitThis": true,
+    "noLib": false,
+    "noUnusedLocals": false,
+    "noUnusedParameters": false,
+    "preserveSymlinks": true,
+    "removeComments": true,
+    "resolveJsonModule": true,
+    "skipLibCheck": true,
+    "sourceMap": true,
+    "strict": true,
+    "strictFunctionTypes": true,
+    "strictNullChecks": true,
+    "strictPropertyInitialization": true,
+    "suppressImplicitAnyIndexErrors": true,
+    "target": "es5"
   },
   "include": [
-    "src/**/*"
+    "packages/**/*"
   ],
   "exclude": [
     "node_modules",
