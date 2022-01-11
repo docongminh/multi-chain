@@ -1,11 +1,15 @@
 {
   "name": "@coreproject/console",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "main": "dist/index.common.js",
   "module": "dist/index.esm.js",
   "browser": "dist/_console.umd.js",
   "publishConfig": {
     "access": "public"
+  },
+  "exports": {
+    "require": "./dist/index.common.js",
+    "import": "./dist/index.esm.js"
   },
   "repository": {
     "directory": "packages/console",
