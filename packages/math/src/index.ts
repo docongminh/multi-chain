@@ -1,8 +1,6 @@
 "use strict";
 
 import {show} from "@coreproject/console";
-// import {show} from "./show";
-// show("test show")
 /**
  * Sum two values
  */

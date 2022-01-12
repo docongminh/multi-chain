@@ -49,7 +49,7 @@ const ESM_min = {
 }
 
 export default [
-	// browser-friendly UMD build
+	// browser-friendly build
 	{
 		input: 'src/index.ts',
 		output:[UMD, UMD_min, IIFE, IIFE_min, ESM, ESM_min],
@@ -63,6 +63,7 @@ export default [
 			}) // so Rollup can convert TypeScript to JavaScript
 		]
 	},
+	// Node module build
 	{
 		input: 'src/index.ts',
 		external: Object.keys(pkg['dependencies'] || []),
