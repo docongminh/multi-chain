@@ -5,47 +5,76 @@ import commonjs from '@rollup/plugin-commonjs';
 import typescript from '@rollup/plugin-typescript';
 
 import pkg from './package.json';
+const UMD = {
+	name: 'math',
+	file: "./dist/index.umd.js",
+	format: 'umd',
+	sourcemap: true
+};
+
+const UMD_min = {
+	name: 'math',
+	file: "./dist/index.umd.min.js",
+	format: 'umd',
+	sourcemap: true,
+	plugins: [terser({mangle: false, compress: false})]
+};
+
+const IIFE = { 
+	file: "./dist/index.iife.js",
+	format: 'iife',
+	name: "math_iife",
+	sourcemap: true
+};
+//
+const IIFE_min = {
+	file: 'dist/index.iife.min.js',
+	format: 'iife',
+	name: 'math_iife',
+	sourcemap: true,
+	plugins: [terser({mangle: false, compress: false})],
+};
+//
+const ESM = { 
+	file: "./dist/index.esm.js",
+	format: 'es',
+	sourcemap: true
+}
+
+const ESM_min = { 
+	file: "./dist/index.esm.min.js",
+	format: 'es',
+	sourcemap: true,
+	plugins: [terser({mangle: false, compress: false})],
+}
 
 export default [
 	// browser-friendly UMD build
 	{
 		input: 'src/index.ts',
-		output: {
-			name: 'math',
-			file: pkg.browser,
-			format: 'umd',
-			sourcemap: true
-		},
+		output:[UMD, UMD_min, IIFE, IIFE_min, ESM, ESM_min],
 		plugins: [
 			nodeResolve(),   // so Rollup can find `ms`
 			commonjs(),  // so Rollup can convert `ms` to an ES module
 			typescript({
 				lib: ["es5", "es6", "dom"],
-				target: "es5"
+				target: "es5",
+				outputToFilesystem: true
 			}) // so Rollup can convert TypeScript to JavaScript
 		]
 	},
-
-	// CommonJS (for Node) and ES module (for bundlers) build.
-	// (We could have three entries in the configuration array
-	// instead of two, but it's quicker to generate multiple
-	// builds from a single configuration where possible, using
-	// an array for the `output` option, where we can specify 
-	// `file` and `format` for each target)
 	{
 		input: 'src/index.ts',
 		external: Object.keys(pkg['dependencies'] || []),
 		plugins: [
-      		terser({module: true}),
-			nodeResolve(),
 			typescript({
 				lib: ["es5", "es6", "dom"],
-				target: "es5"
+				target: "es5",
+				outputToFilesystem: true
 			}) // so Rollup can convert TypeScript to JavaScript
 		],
 		output: [
-			{ file: pkg.main, format: 'cjs', sourcemap: true},
-			{ file: pkg.module, format: 'es', sourcemap: true}
+			{ file: pkg.main, format: 'cjs', sourcemap: true}
 		]
 	}
 ];

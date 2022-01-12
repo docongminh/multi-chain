@@ -3,12 +3,12 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <title>Use UMD library</title>
+  <title>ESM</title>
 </head>
 <body>
-  <script src="./dist/math.umd.js" type="text/javascript"></script>
-  <script>
-      math.add(1,2);
+  <script type="module">
+    import { show } from './dist/index.esm.js';
+    show("hello")
   </script>
 </body>
 </html>

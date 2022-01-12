@@ -1,0 +1,1 @@
+(()=>{"use strict";var c;c="".concat(1," + ").concat(2," = ").concat(3),console.log(c)})();

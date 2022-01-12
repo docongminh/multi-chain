@@ -1,5 +1,8 @@
-import {show} from "@core/console";
+"use strict";
 
+import {show} from "@coreproject/console";
+// import {show} from "./show";
+// show("test show")
 /**
  * Sum two values
  */
@@ -11,7 +14,7 @@ export function add(a:number, b:number):void {
 /**
  * Diff two values
  */
- export function sub(a:number, b:number):void {
+export function sub(a:number, b:number):void {
   var msg = `${a} - ${b} = ${a-b}`;
   show(msg);
 }
