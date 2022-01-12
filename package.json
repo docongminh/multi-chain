@@ -15,7 +15,9 @@
     "bootstrap-hoist": "node ./tools/lib/commands/hoist",
     "preinstall": "npm run prepare && npm run bootstrap-hoist",
     "postinstall": "node ./tools/lib/commands/update-depgraph && npm run bootstrap-link",
-    "bootstrap-link": "node ./tools/lib/commands/link"
+    "bootstrap-link": "node ./tools/lib/commands/link",
+    "clean": "rm -rf ./packages/*/dist",
+    "build": "rollup -c"
   },
   "repository": {
     "type": "git",
