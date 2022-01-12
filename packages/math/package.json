@@ -1,18 +1,23 @@
 {
-  "name": "@core/math",
-  "version": "1.0.0",
-  "description": "",
+  "name": "@coreproject/math",
+  "version": "1.0.1",
   "main": "dist/index.common.js",
   "module": "dist/index.esm.js",
-  "browser": "dist/index.umd.js",
+  "browser": "dist/math.umd.js",
   "types": "types/index.d.ts",
+  "type": "module",
+  "exports": {
+    "require": "./dist/index.commonjs.js",
+    "import": "./dist/index.esm.js"
+  },
   "scripts": {
     "build": "rollup -c rollup.config.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "dependencies": {
-    "@core/console": "^1.0.0"
-  },
   "author": "@minhdocs",
-  "license": "MIT"
+  "license": "MIT",
+  "description": "",
+  "dependencies": {
+    "@coreproject/console": "^1.0.5"
+  }
 }
