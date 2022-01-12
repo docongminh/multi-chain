@@ -1,9 +1,11 @@
 {
   "name": "@coreproject/console",
-  "version": "1.0.2",
+  "version": "1.0.5",
   "main": "dist/index.common.js",
   "module": "dist/index.esm.js",
-  "browser": "dist/_console.umd.js",
+  "browser": "dist/index.umd.js",
+  "types": "./dist/index.d.ts",
+  "type": "module",
   "publishConfig": {
     "access": "public"
   },
@@ -30,6 +32,12 @@
   },
   "author": "@minhdocs",
   "license": "MIT",
-  "devDependencies": {},
-  "description": ""
+  "devDependencies": {
+    "@types/ms": "^0.7.31"
+  },
+  "description": "",
+  "dependencies": {
+    "@ethersproject/base64": "^5.5.0",
+    "ms": "^2.1.3"
+  }
 }
