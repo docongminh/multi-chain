@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>TEST</title>
+</head>
+<body>
+<script type="module">
+  import {EthereumWallet, BaseWallet} from './lib/index.esm.js';
+  console.log("ESM: ", BaseWallet)
+  
+</script>
+<script src="./lib/index.umd.js" type="text/javascript"></script>
+  <script>
+      const umd = new wallet.EthereumWallet("https://kovan.infura.io/v3/9aa3d95b3bc440fa88ea12eaa4456161", "m/44'/60'/0'/0/0");
+      console.log("UMD", umd)
+</script>
+<script src="./lib/index.iife.js" type="text/javascript"></script>
+  <script>
+      console.log("------------- IIFE -----------")
+      const iife = new wallet.EthereumWallet("https://kovan.infura.io/v3/9aa3d95b3bc440fa88ea12eaa4456161", "m/44'/60'/0'/0/0");
+      console.log("IIFE", iife)
+</script>
+</body>
+</html>
