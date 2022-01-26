@@ -1,3 +1,6 @@
 {
-    "vscode.tsc.compiler.alertOnError": "never"
-}
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "[typescript]": {
+      "editor.defaultFormatter": "esbenp.prettier-vscode"
+    }
+  }

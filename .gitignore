@@ -1,5 +1,8 @@
 .package_node_modules
 .DS_Store
+
+# lib
+./packages/**/lib
 # Logs
 logs
 *.log
@@ -41,6 +44,7 @@ build/Release
 
 # Dependency directories
 node_modules/
+./packages/**/node_modules/
 jspm_packages/
 
 # TypeScript v1 declaration files

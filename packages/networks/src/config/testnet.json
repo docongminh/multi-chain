@@ -1,0 +1,54 @@
+{
+    "ETH": {
+        "network_id": 1,
+        "name": "Ethereum",
+        "short_name": "ERC20",
+        "symbol": "ETH",
+        "chain_id": 60,
+        "rpc_url":  "https://kovan.infura.io/v3/9aa3d95b3bc440fa88ea12eaa4456161",
+        "explorer_url": "https://kovan.etherscan.io",
+        "wallet_derive_path": "m/44'/60'/0'/0/0",
+        "icon_url": "https://d1j8r0kxyu9tj8.cloudfront.net/files/1630079333cqnQQ1ZWlu0U5dD.png",
+        "native_token": {
+          "name": "Ethereum",
+          "symbol": "ETH",
+          "decimals": 18,
+          "address": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"
+        }
+    },
+    "BSC": {
+        "network_id": 2,
+        "name": "Binance Smart Chain (Testnet)",
+        "short_name": "BEP20",
+        "symbol": "BSC",
+        "chain_id": 97,
+        "rpc_url": "https://data-seed-prebsc-2-s1.binance.org:8545/",
+        "explorer_url": "https://testnet.bscscan.com",
+        "wallet_derive_path": "m/44'/60'/0'/0/0",
+        "icon_url": "https://d1j8r0kxyu9tj8.cloudfront.net/files/16300793165gXeMDHB9uhQuHt.png",
+        "native_token": {
+          "name": "Binance Smart Chain",
+          "symbol": "BNB",
+          "decimals": 18,
+          "address": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"
+        }
+    },
+    "SPL": {
+        "network_id": 4,
+        "name": "Solana",
+        "short_name": "SPL",
+        "symbol": "SOL",
+        "chain_id": -1,
+        "rpc_url": "https://api.devnet.solana.com/",
+        "explorer_url": "https://explorer.solana.com",
+        "wallet_derive_path": "m/44'/501'/0'/0'",
+        "icon_url": "https://d1j8r0kxyu9tj8.cloudfront.net/files/163298889416YNJzJLs4hAhRQ.png",
+        "native_token": {
+          "name": "Solana",
+          "symbol": "SOL",
+          "decimals": 9,
+          "address": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"
+        }
+      }
+  }
+    
