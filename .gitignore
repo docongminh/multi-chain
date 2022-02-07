@@ -3,6 +3,7 @@
 
 # lib
 ./packages/**/lib
+./packages/**/declarations
 # Logs
 logs
 *.log
