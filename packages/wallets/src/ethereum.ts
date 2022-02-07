@@ -11,6 +11,10 @@ export class EthereumWallet extends BaseWallet {
     return this._provider.address.toString();
   }
 
+  connect(provider: any): EthereumWallet {
+      return new EthereumWallet(this, provider)
+  }
+
   static async walletFromSeed(
     seed: BytesLike,
     derivePathStr = "m/44'/60'/0'/0/0"

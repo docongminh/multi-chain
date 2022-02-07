@@ -31,7 +31,9 @@ export class BaseWallet {
   get publicKey() {
     throw new Error('Abstract Method has no implementation');
   }
-
+  connect(provider: any): BaseWallet{
+    throw new Error('Abstract Method has no implementation');
+  }
   static async walletFromSeed(
     seed: BytesLike,
     derivePath: Path

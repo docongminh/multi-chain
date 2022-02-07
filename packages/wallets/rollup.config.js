@@ -63,12 +63,12 @@ function initConfig(type, format){
 		}
 		else if (format === 'iife'){
 			// Bundling IIFE Module ...
-			config.external = ['http', 'https'];
+			// config.external = ['http', 'https'];
 			config.output = [opt_config.iife, opt_config.iife_min];
 		} 
 		else if (format === 'umd'){
 			// Bundling UMD Module ...
-			config.external = ['http', 'https'];
+			// config.external = ['http', 'https'];
 			config.output = [opt_config.umd, opt_config.umd_min];
 		}
 		else{
