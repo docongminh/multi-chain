@@ -1,6 +1,10 @@
+import { BigNumber } from '@ethersproject/bignumber';
+import { Wallet } from '@ethersproject/wallet';
+import { JsonRpcProvider } from '@ethersproject/providers';
+import { Contract } from '@ethersproject/contracts';
+import { formatUnits } from "@ethersproject/units";
 import * as _type from "./types";
 import { Network } from "./Network";
-import { BigNumber, ethers, Wallet } from "ethers";
 import abi from "./config/abi";
 import { SYMBOL_2_CHAINID } from "./config/constants";
 import Web3 from "web3";
@@ -25,7 +29,7 @@ export default class ERC20 extends Network {
       native_token,
       config.explorer_url
     );
-    this._provider = new ethers.providers.JsonRpcProvider(this.rpcURL);
+    this._provider = new JsonRpcProvider(this.rpcURL);
   }
 
   set provider(value: any) {
@@ -33,7 +37,7 @@ export default class ERC20 extends Network {
   }
 
   async getContractMetadata(contractAddress: string): Promise<_type.Contract> {
-    const contract = new ethers.Contract(contractAddress, abi[this.symbol], this._provider);
+    const contract = new Contract(contractAddress, abi[this.symbol], this._provider);
     const name = await contract.functions.name();
     const decimals = await contract.functions.decimals();
     const symbol = await contract.functions.symbol();
@@ -116,7 +120,7 @@ export default class ERC20 extends Network {
       to: transactionResponse.to,
       nonce: transactionResponse.nonce.toString(),
       data: transactionResponse.data?.toString(),
-      value: ethers.utils.formatUnits(transactionResponse.value, this.nativeToken.decimals),
+      value: formatUnits(transactionResponse.value, this.nativeToken.decimals),
       maxFeePerGas: BigNumber.from(transactionResponse.maxFeePerGas).toString(),
       maxPriorityFeePerGas: BigNumber.from(transactionResponse.maxPriorityFeePerGas).toString(),
       gasLimit: BigNumber.from(transactionResponse.gasLimit).toString(),
@@ -129,7 +133,7 @@ export default class ERC20 extends Network {
   }
 
   async getTokenBalances(walletAddress: string): Promise<_type.TokenBalance[]> {
-    const res = await getTokenBalancesApi(walletAddress, SYMBOL_2_CHAINID[this.symbol]);
+    const res = await getTokenBalancesApi(walletAddress, SYMBOL_2_CHAINID[this.symbol].toString());
     let tokensBalances = [];
     if (res.data) {
       tokensBalances = res.data.map((item:any) => {
@@ -137,7 +141,7 @@ export default class ERC20 extends Network {
           address: item.contract_address,
           symbol: item.contract_ticker_symbol,
           network: this.symbol,
-          amount: ethers.utils.formatUnits(item.balance, item.contract_decimals),
+          amount: formatUnits(item.balance, item.contract_decimals),
         };
       });
     }

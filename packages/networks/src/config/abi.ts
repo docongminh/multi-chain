@@ -149,11 +149,11 @@ const ethABI: Array<object> = [
       type: "event",
     },
   ];
+
+interface Iabi {[key: string]: Array<object>}
+const abi: Iabi = {
+  "ETH": ethABI,
+  "BSC": ethABI,
+};
   
-const abi = {
-    ETH: ethABI,
-    BSC: ethABI,
-  };
-  
-  export default abi;
-  
+export default abi;

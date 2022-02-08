@@ -6,22 +6,31 @@ import replace from '@rollup/plugin-replace';
 import nodePolyfills from 'rollup-plugin-node-polyfills';
 import * as opt_config from './config';
 
-
-const env = process.env.NODE_ENV;
 const extensions = ['.js', '.ts'];
-//
 const cjs_external = [
 	/@babel\/runtime/,
 	'@solana/web3.js',
+	'@solana/buffer-layout',
+	'@solana/spl-token',
 	'@ethersproject/wallet',
 	'@ethersproject/hdnode',
-	'ed25519-hd-key'
+	'@ethersproject/bignumber',
+	'@ethersproject/providers',
+	'@ethersproject/contracts',
+	'@ethersproject/units',
+	'web3',
+	'@coreproject/wallets',
+	'tweetnacl',
+	'@metaplex-foundation/mpl-token-metadata',
+	'axios'
+
 ];
 //
 function initConfig(type, format){
 	const browser = type === 'browser';
 	const bundle = format === 'iife';
 
+	// base config
 	let config = {
 		input: 'src/index.ts',
 		plugins: [
@@ -55,7 +64,8 @@ function initConfig(type, format){
 		},
 		context: 'window'
 	}
-	//
+	
+	// browser config
 	if(type=='browser'){
 		if(format === 'esm'){
 			// Bundling ES Module ...
@@ -63,18 +73,19 @@ function initConfig(type, format){
 		}
 		else if (format === 'iife'){
 			// Bundling IIFE Module ...
-			config.external = ['http', 'https'];
+			// config.external = ['http', 'https'];
 			config.output = [opt_config.iife, opt_config.iife_min];
 		} 
 		else if (format === 'umd'){
 			// Bundling UMD Module ...
-			config.external = ['http', 'https'];
+			// config.external = ['http', 'https'];
 			config.output = [opt_config.umd, opt_config.umd_min];
 		}
 		else{
 			throw new Error(`Unknown format: ${format}`);
 		}
 	}
+	// node config
 	else if(type=='node'){
 		// Bundling Node Module ...
 		config.external = cjs_external;

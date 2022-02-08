@@ -1,4 +1,4 @@
-import { ethers, Wallet } from "ethers";
+import { formatUnits } from "@ethersproject/units";
 import * as _type from "./types"
 
 export class Network {
@@ -36,23 +36,23 @@ export class Network {
     throw new Error("Abstract Method has no implementation");
   }
 
-  getSigner(wallet: Wallet): any {
+  getSigner(wallet: any): any {
     throw new Error("Abstract Method has no implementation");
   }
 
   getTransactionFee(gasFee: string): string {
-    return ethers.utils.formatUnits(gasFee.toString(), this.nativeToken.decimals);
+    return formatUnits(gasFee.toString(), this.nativeToken.decimals);
   }
 
   getUnitCost(): string {
     return this.nativeToken.symbol;
   }
 
-  async createTransactionOrder(wallet: Wallet, order: _type.OrderRequest): Promise<_type.TransactionRequest> {
+  async createTransactionOrder(wallet: any, order: _type.OrderRequest): Promise<_type.TransactionRequest> {
     throw new Error("Abstract Method has no implementation");
   }
 
-  async sendTransaction(wallet: Wallet, transactionRequest: _type.TransactionRequest): Promise<_type.TransactionResponse> {
+  async sendTransaction(wallet: any, transactionRequest: _type.TransactionRequest): Promise<_type.TransactionResponse> {
     throw new Error("Abstract Method has no implementation");
   }
 
@@ -72,7 +72,7 @@ export class Network {
     throw new Error("Abstract Method has no implementation");
   }
 
-  signMessage(wallet: Wallet, message: string): any {
+  signMessage(wallet: any, message: string): any {
     throw new Error("Abstract Method has no implementation");
   }
 }

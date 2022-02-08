@@ -13,7 +13,7 @@
         "name": "Ethereum",
         "symbol": "ETH",
         "decimals": 18,
-        "address": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+        "address": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"
       }
   },
   "BSC": {
@@ -47,7 +47,7 @@
         "name": "Solana",
         "symbol": "SOL",
         "decimals": 9,
-        "address": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+        "address": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"
       }
     }
 }
