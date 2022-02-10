@@ -33,7 +33,7 @@
         "build:rollup": "rollup -c rollup.config.js",
         "typegen": "bash ./typegen.sh",
         "publish:network": "npm publish --access public",
-        "test": "echo \"Error: no test specified\" && exit 1"
+        "dev:test": "ts-node --project tsconfig.test.json src/index.ts"
     },
     "devDependencies": {
         "bip39": "^3.0.4",

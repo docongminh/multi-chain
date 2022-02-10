@@ -6050,7 +6050,7 @@ var network = (function (exports) {
 	  config: config$4,
 	  uptime: uptime$1
 	};
-	var process = browser$1$1;
+	var process$1 = browser$1$1;
 
 	var sha3$5 = {exports: {}};
 
@@ -6068,7 +6068,7 @@ var network = (function (exports) {
 	    }
 
 	    var WEB_WORKER = !WINDOW && typeof self === 'object';
-	    var NODE_JS = !root.JS_SHA3_NO_NODE_JS && typeof process === 'object' && process.versions && process.versions.node;
+	    var NODE_JS = !root.JS_SHA3_NO_NODE_JS && typeof process$1 === 'object' && process$1.versions && process$1.versions.node;
 
 	    if (NODE_JS) {
 	      root = commonjsGlobal$1;
@@ -20273,24 +20273,26 @@ var network = (function (exports) {
 	}
 
 	class Network {
-	  constructor(name, rpcURL, chainID, symbol, nativeToken, explorerUrl) {
+	  constructor(web3_provider, network_info) {
+	    this.nativeToken = void 0;
 	    this.name = void 0;
 	    this.rpcURL = void 0;
 	    this.chainID = void 0;
 	    this.symbol = void 0;
 	    this.explorerUrl = void 0;
-	    this.nativeToken = void 0;
-	    this.name = name;
-	    this.rpcURL = rpcURL;
-	    this.chainID = chainID;
-	    this.symbol = symbol;
-	    this.explorerUrl = explorerUrl;
+	    this.rpcURL = web3_provider.rpcUrl;
+	    this.explorerUrl = web3_provider.explorer;
+	    this.name = network_info.name;
+	    this.chainID = network_info.chain_id;
+	    this.symbol = network_info.symbol; //
 
-	    if (!nativeToken) {
-	      throw new Error("Constructor do not add native token parameter");
-	    }
-
-	    this.nativeToken = nativeToken;
+	    const native_token = {
+	      name: network_info.native_token.name,
+	      symbol: network_info.native_token.symbol,
+	      decimals: network_info.native_token.decimals,
+	      address: network_info.native_token.address
+	    };
+	    this.nativeToken = native_token;
 	  }
 
 	  async getContractMetadata(contractAddress) {
@@ -22777,7 +22779,7 @@ var network = (function (exports) {
 	    };
 	  }
 
-	  if (process.noDeprecation === true) {
+	  if (process$1.noDeprecation === true) {
 	    return fn;
 	  }
 
@@ -22785,9 +22787,9 @@ var network = (function (exports) {
 
 	  function deprecated() {
 	    if (!warned) {
-	      if (process.throwDeprecation) {
+	      if (process$1.throwDeprecation) {
 	        throw new Error(msg);
-	      } else if (process.traceDeprecation) {
+	      } else if (process$1.traceDeprecation) {
 	        console.trace(msg);
 	      } else {
 	        console.error(msg);
@@ -22804,7 +22806,7 @@ var network = (function (exports) {
 	var debugs = {};
 	var debugEnviron;
 	function debuglog(set) {
-	  if (isUndefined$2(debugEnviron)) debugEnviron = process.env.NODE_DEBUG || '';
+	  if (isUndefined$2(debugEnviron)) debugEnviron = process$1.env.NODE_DEBUG || '';
 	  set = set.toUpperCase();
 
 	  if (!debugs[set]) {
@@ -28639,7 +28641,7 @@ var network = (function (exports) {
 	  }
 
 	  if (typeof cb === 'function') {
-	    return process.nextTick(function () {
+	    return process$1.nextTick(function () {
 	      cb(null, bytes);
 	    });
 	  }
@@ -30222,10 +30224,10 @@ var network = (function (exports) {
 	      cb(err);
 	    } else if (err) {
 	      if (!this._writableState) {
-	        process.nextTick(emitErrorNT, this, err);
+	        process$1.nextTick(emitErrorNT, this, err);
 	      } else if (!this._writableState.errorEmitted) {
 	        this._writableState.errorEmitted = true;
-	        process.nextTick(emitErrorNT, this, err);
+	        process$1.nextTick(emitErrorNT, this, err);
 	      }
 	    }
 
@@ -30246,18 +30248,18 @@ var network = (function (exports) {
 	  this._destroy(err || null, function (err) {
 	    if (!cb && err) {
 	      if (!_this._writableState) {
-	        process.nextTick(emitErrorAndCloseNT, _this, err);
+	        process$1.nextTick(emitErrorAndCloseNT, _this, err);
 	      } else if (!_this._writableState.errorEmitted) {
 	        _this._writableState.errorEmitted = true;
-	        process.nextTick(emitErrorAndCloseNT, _this, err);
+	        process$1.nextTick(emitErrorAndCloseNT, _this, err);
 	      } else {
-	        process.nextTick(emitCloseNT, _this);
+	        process$1.nextTick(emitCloseNT, _this);
 	      }
 	    } else if (cb) {
-	      process.nextTick(emitCloseNT, _this);
+	      process$1.nextTick(emitCloseNT, _this);
 	      cb(err);
 	    } else {
-	      process.nextTick(emitCloseNT, _this);
+	      process$1.nextTick(emitCloseNT, _this);
 	    }
 	  });
 
@@ -30766,7 +30768,7 @@ var network = (function (exports) {
 	  var er = new ERR_STREAM_WRITE_AFTER_END(); // TODO: defer error events consistently everywhere, not just the cb
 
 	  errorOrDestroy$1(stream, er);
-	  process.nextTick(cb, er);
+	  process$1.nextTick(cb, er);
 	} // Checks that a user-supplied chunk is valid, especially for the particular
 	// mode the stream is in. Currently this means that `null` is never accepted
 	// and undefined/non-string values are only allowed in object mode.
@@ -30783,7 +30785,7 @@ var network = (function (exports) {
 
 	  if (er) {
 	    errorOrDestroy$1(stream, er);
-	    process.nextTick(cb, er);
+	    process$1.nextTick(cb, er);
 	    return false;
 	  }
 
@@ -30921,10 +30923,10 @@ var network = (function (exports) {
 	  if (sync) {
 	    // defer the callback if we are being called synchronously
 	    // to avoid piling up things on the stack
-	    process.nextTick(cb, er); // this can emit finish, and it will always happen
+	    process$1.nextTick(cb, er); // this can emit finish, and it will always happen
 	    // after error
 
-	    process.nextTick(finishMaybe$1, stream, state);
+	    process$1.nextTick(finishMaybe$1, stream, state);
 	    stream._writableState.errorEmitted = true;
 	    errorOrDestroy$1(stream, er);
 	  } else {
@@ -30961,7 +30963,7 @@ var network = (function (exports) {
 	    }
 
 	    if (sync) {
-	      process.nextTick(afterWrite$1, stream, state, finished, cb);
+	      process$1.nextTick(afterWrite$1, stream, state, finished, cb);
 	    } else {
 	      afterWrite$1(stream, state, finished, cb);
 	    }
@@ -31110,7 +31112,7 @@ var network = (function (exports) {
 	    if (typeof stream._final === 'function' && !state.destroyed) {
 	      state.pendingcb++;
 	      state.finalCalled = true;
-	      process.nextTick(callFinal, stream, state);
+	      process$1.nextTick(callFinal, stream, state);
 	    } else {
 	      state.prefinished = true;
 	      stream.emit('prefinish');
@@ -31148,7 +31150,7 @@ var network = (function (exports) {
 	  finishMaybe$1(stream, state);
 
 	  if (cb) {
-	    if (state.finished) process.nextTick(cb);else stream.once('finish', cb);
+	    if (state.finished) process$1.nextTick(cb);else stream.once('finish', cb);
 	  }
 
 	  state.ended = true;
@@ -31280,7 +31282,7 @@ var network = (function (exports) {
 	  if (this._writableState.ended) return; // no more data can be written.
 	  // But allow more writes to happen in this tick.
 
-	  process.nextTick(onEndNT$1, this);
+	  process$1.nextTick(onEndNT$1, this);
 	}
 
 	function onEndNT$1(self) {
@@ -31788,7 +31790,7 @@ var network = (function (exports) {
 	function onReadable(iter) {
 	  // we wait for the next tick, because it might
 	  // emit an error with process.nextTick
-	  process.nextTick(readAndResolve, iter);
+	  process$1.nextTick(readAndResolve, iter);
 	}
 
 	function wrapForNext(lastPromise, iter) {
@@ -31831,7 +31833,7 @@ var network = (function (exports) {
 	      // we cannot guarantee that there is no error lingering around
 	      // waiting to be emitted.
 	      return new Promise(function (resolve, reject) {
-	        process.nextTick(function () {
+	        process$1.nextTick(function () {
 	          if (_this[kError]) {
 	            reject(_this[kError]);
 	          } else {
@@ -32455,7 +32457,7 @@ var network = (function (exports) {
 	  if (!state.emittedReadable) {
 	    debug$1('emitReadable', state.flowing);
 	    state.emittedReadable = true;
-	    process.nextTick(emitReadable_$1, stream);
+	    process$1.nextTick(emitReadable_$1, stream);
 	  }
 	}
 
@@ -32487,7 +32489,7 @@ var network = (function (exports) {
 	function maybeReadMore$1(stream, state) {
 	  if (!state.readingMore) {
 	    state.readingMore = true;
-	    process.nextTick(maybeReadMore_$1, stream, state);
+	    process$1.nextTick(maybeReadMore_$1, stream, state);
 	  }
 	}
 
@@ -32554,9 +32556,9 @@ var network = (function (exports) {
 
 	  state.pipesCount += 1;
 	  debug$1('pipe count=%d opts=%j', state.pipesCount, pipeOpts);
-	  var doEnd = (!pipeOpts || pipeOpts.end !== false) && dest !== process.stdout && dest !== process.stderr;
+	  var doEnd = (!pipeOpts || pipeOpts.end !== false) && dest !== process$1.stdout && dest !== process$1.stderr;
 	  var endFn = doEnd ? onend : unpipe;
-	  if (state.endEmitted) process.nextTick(endFn);else src.once('end', endFn);
+	  if (state.endEmitted) process$1.nextTick(endFn);else src.once('end', endFn);
 	  dest.on('unpipe', onunpipe);
 
 	  function onunpipe(readable, unpipeInfo) {
@@ -32750,7 +32752,7 @@ var network = (function (exports) {
 	      if (state.length) {
 	        emitReadable$1(this);
 	      } else if (!state.reading) {
-	        process.nextTick(nReadingNextTick$1, this);
+	        process$1.nextTick(nReadingNextTick$1, this);
 	      }
 	    }
 	  }
@@ -32770,7 +32772,7 @@ var network = (function (exports) {
 	    // support once('readable', fn) cycles. This means that calling
 	    // resume within the same tick will have no
 	    // effect.
-	    process.nextTick(updateReadableListening, this);
+	    process$1.nextTick(updateReadableListening, this);
 	  }
 
 	  return res;
@@ -32786,7 +32788,7 @@ var network = (function (exports) {
 	    // support once('readable', fn) cycles. This means that calling
 	    // resume within the same tick will have no
 	    // effect.
-	    process.nextTick(updateReadableListening, this);
+	    process$1.nextTick(updateReadableListening, this);
 	  }
 
 	  return res;
@@ -32831,7 +32833,7 @@ var network = (function (exports) {
 	function resume$1(stream, state) {
 	  if (!state.resumeScheduled) {
 	    state.resumeScheduled = true;
-	    process.nextTick(resume_$1, stream, state);
+	    process$1.nextTick(resume_$1, stream, state);
 	  }
 	}
 
@@ -33009,7 +33011,7 @@ var network = (function (exports) {
 
 	  if (!state.endEmitted) {
 	    state.ended = true;
-	    process.nextTick(endReadableNT$1, state, stream);
+	    process$1.nextTick(endReadableNT$1, state, stream);
 	  }
 	}
 
@@ -42695,7 +42697,7 @@ var network = (function (exports) {
 
 	var require$$3$4 = /*@__PURE__*/getAugmentedNamespace(url$A);
 
-	var isNode = Object.prototype.toString.call(typeof process !== 'undefined' ? process : 0) === '[object process]';
+	var isNode = Object.prototype.toString.call(typeof process$1 !== 'undefined' ? process$1 : 0) === '[object process]';
 	var isRN = typeof navigator !== 'undefined' && navigator.product === 'ReactNative';
 	var _btoa = null;
 	var helpers$4 = null;
@@ -43372,7 +43374,7 @@ var network = (function (exports) {
 
 	  self.on('end', function () {
 	    // The nextTick is necessary to prevent the 'request' module from causing an infinite loop
-	    process.nextTick(function () {
+	    process$1.nextTick(function () {
 	      self.emit('close');
 	    });
 	  });
@@ -43699,7 +43701,7 @@ var network = (function (exports) {
 	    try {
 	      xhr.open(self._opts.method, self._opts.url, true);
 	    } catch (err) {
-	      process.nextTick(function () {
+	      process$1.nextTick(function () {
 	        self.emit('error', err);
 	      });
 	      return;
@@ -43740,7 +43742,7 @@ var network = (function (exports) {
 	    try {
 	      xhr.send(body);
 	    } catch (err) {
-	      process.nextTick(function () {
+	      process$1.nextTick(function () {
 	        self.emit('error', err);
 	      });
 	      return;
@@ -44790,7 +44792,7 @@ var network = (function (exports) {
 	      'set-cookie': true,
 	      'set-cookie2': true
 	    };
-	    _this._userAgent = "Mozilla/5.0 (" + os$1.type() + " " + os$1.arch() + ") node.js/" + process.versions.node + " v8/" + process.versions.v8;
+	    _this._userAgent = "Mozilla/5.0 (" + os$1.type() + " " + os$1.arch() + ") node.js/" + process$1.versions.node + " v8/" + process$1.versions.v8;
 	    _this._anonymous = options.anon || false;
 	    return _this;
 	  }
@@ -55636,7 +55638,7 @@ var network = (function (exports) {
 	  (function () {
 
 	    var root = typeof window === 'object' ? window : {};
-	    var NODE_JS = !root.JS_SHA3_NO_NODE_JS && typeof process === 'object' && process.versions && process.versions.node;
+	    var NODE_JS = !root.JS_SHA3_NO_NODE_JS && typeof process$1 === 'object' && process$1.versions && process$1.versions.node;
 
 	    if (NODE_JS) {
 	      root = commonjsGlobal$1;
@@ -63774,7 +63776,7 @@ var network = (function (exports) {
 	if (commonjsGlobal$1.process && commonjsGlobal$1.process.browser) {
 	  defaultEncoding$2 = 'utf-8';
 	} else if (commonjsGlobal$1.process && commonjsGlobal$1.process.version) {
-	  var pVersionMajor = parseInt(process.version.split('.')[0].slice(1), 10);
+	  var pVersionMajor = parseInt(process$1.version.split('.')[0].slice(1), 10);
 	  defaultEncoding$2 = pVersionMajor >= 6 ? 'utf-8' : 'binary';
 	} else {
 	  defaultEncoding$2 = 'utf-8';
@@ -66578,7 +66580,7 @@ var network = (function (exports) {
 
 	if (!safer.kStringMaxLength) {
 	  try {
-	    safer.kStringMaxLength = process.binding('buffer').kStringMaxLength;
+	    safer.kStringMaxLength = process$1.binding('buffer').kStringMaxLength;
 	  } catch (e) {// we can't determine kStringMaxLength in environments where process.binding
 	    // is unsupported, so let's not set it
 	  }
@@ -69155,7 +69157,7 @@ var network = (function (exports) {
 	  }
 	}
 
-	if (crypto$1 && crypto$1.getRandomValues || !process.browser) {
+	if (crypto$1 && crypto$1.getRandomValues || !process$1.browser) {
 	  browser$1.randomFill = randomFill;
 	  browser$1.randomFillSync = randomFillSync;
 	} else {
@@ -69185,13 +69187,13 @@ var network = (function (exports) {
 	}
 
 	function actualFill(buf, offset, size, cb) {
-	  if (process.browser) {
+	  if (process$1.browser) {
 	    var ourBuf = buf.buffer;
 	    var uint = new Uint8Array(ourBuf, offset, size);
 	    crypto$1.getRandomValues(uint);
 
 	    if (cb) {
-	      process.nextTick(function () {
+	      process$1.nextTick(function () {
 	        cb(null, buf);
 	      });
 	      return;
@@ -91855,7 +91857,7 @@ var network = (function (exports) {
 	  if (typeof XMLHttpRequest !== 'undefined') {
 	    // For browsers use XHR adapter
 	    adapter = xhr;
-	  } else if (typeof process !== 'undefined' && Object.prototype.toString.call(process) === '[object process]') {
+	  } else if (typeof process$1 !== 'undefined' && Object.prototype.toString.call(process$1) === '[object process]') {
 	    // For node use HTTP adapter
 	    adapter = xhr;
 	  }
@@ -92605,15 +92607,8 @@ var network = (function (exports) {
 	}
 
 	class ERC20 extends Network {
-	  constructor(config) {
-	    //
-	    const native_token = {
-	      name: config.native_token.name,
-	      symbol: config.native_token.symbol,
-	      decimals: config.native_token.decimals,
-	      address: config.native_token.address
-	    };
-	    super(config.name, config.rpc_url, config.chain_id, config.symbol, native_token, config.explorer_url);
+	  constructor(web3_providers, network_info) {
+	    super(web3_providers, network_info);
 	    this._provider = void 0;
 	    this._provider = new JsonRpcProvider(this.rpcURL);
 	  }
@@ -92782,15 +92777,8 @@ var network = (function (exports) {
 	}
 
 	class BEP20 extends Network {
-	  constructor(config) {
-	    //
-	    const native_token = {
-	      name: config.native_token.name,
-	      symbol: config.native_token.symbol,
-	      decimals: config.native_token.decimals,
-	      address: config.native_token.address
-	    };
-	    super(config.name, config.rpc_url, config.chain_id, config.symbol, native_token, config.explorer_url);
+	  constructor(web3_providers, network_info) {
+	    super(web3_providers, network_info);
 	    this._provider = void 0;
 	    this._provider = new JsonRpcProvider(this.rpcURL);
 	  }
@@ -114164,15 +114152,8 @@ var network = (function (exports) {
 	struct([u8('m'), u8('n'), u8('is_initialized'), publicKey('signer1'), publicKey('signer2'), publicKey('signer3'), publicKey('signer4'), publicKey('signer5'), publicKey('signer6'), publicKey('signer7'), publicKey('signer8'), publicKey('signer9'), publicKey('signer10'), publicKey('signer11')]);
 
 	class SPL extends Network {
-	  constructor(config) {
-	    //
-	    const native_token = {
-	      name: config.native_token.name,
-	      symbol: config.native_token.symbol,
-	      decimals: config.native_token.decimals,
-	      address: config.native_token.address
-	    };
-	    super(config.name, config.rpc_url, config.chain_id, config.symbol, native_token, config.explorer_url);
+	  constructor(web3_providers, network_info) {
+	    super(web3_providers, network_info);
 	    this._provider = void 0;
 	    this._provider = new Connection(this.rpcURL);
 	  }
@@ -114277,6 +114258,38 @@ var network = (function (exports) {
 	  }
 
 	}
+
+	var BSC = {
+		network_id: 2,
+		name: "Binance Smart Chain",
+		short_name: "BEP20",
+		symbol: "BSC",
+		chain_id: 56,
+		explorer_url: "https://bscscan.com",
+		wallet_derive_path: "m/44'/60'/0'/0/0",
+		icon_url: "https://d1j8r0kxyu9tj8.cloudfront.net/files/16300793165gXeMDHB9uhQuHt.png",
+		native_token: {
+			name: "Binance Smart Chain",
+			symbol: "BNB",
+			decimals: 18,
+			address: "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"
+		}
+	};
+
+	const TESTNET_PROVIDER = {
+	  rpcUrl: 'https://rinkeby.infura.io/v3/5ffc47f65c4042ce847ef66a3fa70d4c',
+	  explorer: 'https://testnet.bscscan.com'
+	};
+	const MAINNET_PROVIDER = {
+	  rpcUrl: process.env.BSC_MAINNET_PROVIDER || 'https://bsc-dataseed.binance.org/',
+	  explorer: process.env.BSC_MAINNET_PROVIDER || 'https://bscscan.com'
+	};
+	const network = {
+	  mainnet: MAINNET_PROVIDER,
+	  testnet: TESTNET_PROVIDER
+	};
+	new BEP20(network['mainnet'], BSC);
+	new BEP20(network['testnet'], BSC); // ----------------------------------
 
 	const SUFFIX_NFT_NETWORK = "NFT";
 

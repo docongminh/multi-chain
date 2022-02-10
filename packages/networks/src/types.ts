@@ -1,6 +1,13 @@
 
 export type Network = "ETH" | "BSC" | "SPL";
 
+export type NetType = 'testnet' | 'mainnet';
+
+export type Web3Provider = {
+  rpcUrl: string,
+  explorer: string
+}
+
 export type Contract = {
     name: string,
     symbol: string,
@@ -15,11 +22,8 @@ export type Contract = {
     short_name: string,
     symbol: string,
     chain_id: number,
-    rpc_url: string,
-    explorer_url: string,
     wallet_derive_path: string,
     icon_url: string,
-    is_testnet?: boolean,
     native_token: {
       name: string,
       symbol: string,

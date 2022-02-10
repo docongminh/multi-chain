@@ -98,6 +98,6 @@ function initConfig(type, format){
 export default [
 	initConfig('node'),
 	initConfig('browser', 'esm'),
-	initConfig('browser', 'iife'),
-	initConfig('browser', 'umd'),
+	// initConfig('browser', 'iife'),
+	// initConfig('browser', 'umd'),
 ]

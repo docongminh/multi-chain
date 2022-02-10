@@ -4,7 +4,7 @@ import { SolanaWallet } from "@coreproject/wallets";
 import { Connection } from "@solana/web3.js";
 export default class SPL extends Network {
     _provider: Connection;
-    constructor(config: _type.NetworkInfo);
+    constructor(web3_providers: _type.Web3Provider, network_info: _type.NetworkInfo);
     getContractMetadata(contractAddress: string): Promise<_type.Contract | null>;
     getProvider(): Connection;
     getBalance(address: string): Promise<string>;

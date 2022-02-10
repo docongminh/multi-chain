@@ -3,7 +3,7 @@ import * as _type from "./types";
 import { Network } from "./Network";
 export default class ERC20 extends Network {
     _provider: any;
-    constructor(config: _type.NetworkInfo);
+    constructor(web3_providers: _type.Web3Provider, network_info: _type.NetworkInfo);
     set provider(value: any);
     getContractMetadata(contractAddress: string): Promise<_type.Contract>;
     getProvider(): any;

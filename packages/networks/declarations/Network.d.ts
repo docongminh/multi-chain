@@ -1,12 +1,12 @@
 import * as _type from "./types";
 export declare class Network {
+    nativeToken: _type.NativeToken;
     name: string;
     rpcURL: string;
     chainID: number;
     symbol: string;
     explorerUrl: string;
-    nativeToken: _type.NativeToken;
-    constructor(name: string, rpcURL: string, chainID: number, symbol: string, nativeToken: _type.NativeToken, explorerUrl: string);
+    constructor(web3_provider: _type.Web3Provider, network_info: _type.NetworkInfo);
     getContractMetadata(contractAddress: string): Promise<_type.Contract | null>;
     getBalance(address: string): Promise<string>;
     getSigner(wallet: any): any;

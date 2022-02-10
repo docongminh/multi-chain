@@ -15,29 +15,29 @@ import { getTokenBalancesApi } from "./utils";
 export default class BEP20 extends Network {
   _provider: any;
 
-  constructor(config: _type.NetworkInfo) {
-    //
-    const native_token: _type.NativeToken = {
-      name: config.native_token.name, 
-      symbol: config.native_token.symbol, 
-      decimals: config.native_token.decimals, 
-      address: config.native_token.address
-    }
-    super(
-      config.name,
-      config.rpc_url,
-      config.chain_id,
-      config.symbol,
-      native_token,
-      config.explorer_url
-    );
+  constructor(web3_provider: _type.Web3Provider,
+    network_info: _type.NetworkInfo
+  ){
+    super(web3_provider, network_info);
     this._provider = new JsonRpcProvider(this.rpcURL);
   }
 
-  set provider(value: any) {
-    this._provider = value;
+  newConfig(web3_provider: _type.Web3Provider, network_info: _type.NetworkInfo){
+    this.rpcURL = web3_provider.rpcUrl;
+    this.explorerUrl = web3_provider.explorer;
+    this.name = network_info.name;
+    this.chainID = network_info.chain_id;
+    this.symbol = network_info.symbol;
+    //
+    const native_token: _type.NativeToken = {
+      name: network_info.native_token.name, 
+      symbol: network_info.native_token.symbol, 
+      decimals: network_info.native_token.decimals, 
+      address: network_info.native_token.address
+    }
+    this.nativeToken = native_token;
+    this._provider = new JsonRpcProvider(this.rpcURL)
   }
-
   async getContractMetadata(contractAddress: string): Promise<_type.Contract> {
     const contract = new Contract(contractAddress, abi[this.symbol], this._provider);
     const name = await contract.functions.name();

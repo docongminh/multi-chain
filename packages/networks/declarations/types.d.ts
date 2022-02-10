@@ -1,4 +1,9 @@
 export declare type Network = "ETH" | "BSC" | "SPL";
+export declare type NetType = 'testnet' | 'mainnet';
+export declare type Web3Provider = {
+    rpcUrl: string;
+    explorer: string;
+};
 export declare type Contract = {
     name: string;
     symbol: string;
@@ -12,11 +17,8 @@ export declare type NetworkInfo = {
     short_name: string;
     symbol: string;
     chain_id: number;
-    rpc_url: string;
-    explorer_url: string;
     wallet_derive_path: string;
     icon_url: string;
-    is_testnet?: boolean;
     native_token: {
         name: string;
         symbol: string;

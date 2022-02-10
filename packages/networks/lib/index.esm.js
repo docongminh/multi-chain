@@ -20270,24 +20270,26 @@ function formatUnits(value, unitName) {
 }
 
 class Network {
-  constructor(name, rpcURL, chainID, symbol, nativeToken, explorerUrl) {
+  constructor(web3_provider, network_info) {
+    this.nativeToken = void 0;
     this.name = void 0;
     this.rpcURL = void 0;
     this.chainID = void 0;
     this.symbol = void 0;
     this.explorerUrl = void 0;
-    this.nativeToken = void 0;
-    this.name = name;
-    this.rpcURL = rpcURL;
-    this.chainID = chainID;
-    this.symbol = symbol;
-    this.explorerUrl = explorerUrl;
+    this.rpcURL = web3_provider.rpcUrl;
+    this.explorerUrl = web3_provider.explorer;
+    this.name = network_info.name;
+    this.chainID = network_info.chain_id;
+    this.symbol = network_info.symbol; //
 
-    if (!nativeToken) {
-      throw new Error("Constructor do not add native token parameter");
-    }
-
-    this.nativeToken = nativeToken;
+    const native_token = {
+      name: network_info.native_token.name,
+      symbol: network_info.native_token.symbol,
+      decimals: network_info.native_token.decimals,
+      address: network_info.native_token.address
+    };
+    this.nativeToken = native_token;
   }
 
   async getContractMetadata(contractAddress) {
@@ -92602,15 +92604,8 @@ function getTokenMetaApi(tokenAddress) {
 }
 
 class ERC20 extends Network {
-  constructor(config) {
-    //
-    const native_token = {
-      name: config.native_token.name,
-      symbol: config.native_token.symbol,
-      decimals: config.native_token.decimals,
-      address: config.native_token.address
-    };
-    super(config.name, config.rpc_url, config.chain_id, config.symbol, native_token, config.explorer_url);
+  constructor(web3_providers, network_info) {
+    super(web3_providers, network_info);
     this._provider = void 0;
     this._provider = new JsonRpcProvider(this.rpcURL);
   }
@@ -92779,21 +92774,27 @@ class ERC20 extends Network {
 }
 
 class BEP20 extends Network {
-  constructor(config) {
-    //
-    const native_token = {
-      name: config.native_token.name,
-      symbol: config.native_token.symbol,
-      decimals: config.native_token.decimals,
-      address: config.native_token.address
-    };
-    super(config.name, config.rpc_url, config.chain_id, config.symbol, native_token, config.explorer_url);
+  constructor(web3_provider, network_info) {
+    super(web3_provider, network_info);
     this._provider = void 0;
     this._provider = new JsonRpcProvider(this.rpcURL);
   }
 
-  set provider(value) {
-    this._provider = value;
+  newConfig(web3_provider, network_info) {
+    this.rpcURL = web3_provider.rpcUrl;
+    this.explorerUrl = web3_provider.explorer;
+    this.name = network_info.name;
+    this.chainID = network_info.chain_id;
+    this.symbol = network_info.symbol; //
+
+    const native_token = {
+      name: network_info.native_token.name,
+      symbol: network_info.native_token.symbol,
+      decimals: network_info.native_token.decimals,
+      address: network_info.native_token.address
+    };
+    this.nativeToken = native_token;
+    this._provider = new JsonRpcProvider(this.rpcURL);
   }
 
   async getContractMetadata(contractAddress) {
@@ -114161,15 +114162,8 @@ struct([publicKey('mint'), publicKey('owner'), uint64('amount'), u32('delegateOp
 struct([u8('m'), u8('n'), u8('is_initialized'), publicKey('signer1'), publicKey('signer2'), publicKey('signer3'), publicKey('signer4'), publicKey('signer5'), publicKey('signer6'), publicKey('signer7'), publicKey('signer8'), publicKey('signer9'), publicKey('signer10'), publicKey('signer11')]);
 
 class SPL extends Network {
-  constructor(config) {
-    //
-    const native_token = {
-      name: config.native_token.name,
-      symbol: config.native_token.symbol,
-      decimals: config.native_token.decimals,
-      address: config.native_token.address
-    };
-    super(config.name, config.rpc_url, config.chain_id, config.symbol, native_token, config.explorer_url);
+  constructor(web3_providers, network_info) {
+    super(web3_providers, network_info);
     this._provider = void 0;
     this._provider = new Connection(this.rpcURL);
   }
@@ -114275,7 +114269,42 @@ class SPL extends Network {
 
 }
 
-const SUFFIX_NFT_NETWORK = "NFT";
+var BSC = {
+	network_id: 2,
+	name: "Binance Smart Chain",
+	short_name: "BEP20",
+	symbol: "BSC",
+	chain_id: 56,
+	explorer_url: "https://bscscan.com",
+	wallet_derive_path: "m/44'/60'/0'/0/0",
+	icon_url: "https://d1j8r0kxyu9tj8.cloudfront.net/files/16300793165gXeMDHB9uhQuHt.png",
+	native_token: {
+		name: "Binance Smart Chain",
+		symbol: "BNB",
+		decimals: 18,
+		address: "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"
+	}
+};
+
+const SUFFIX_NFT_NETWORK = "NFT"; //
+const TESTNET_PROVIDER = {
+  rpcUrl: 'https://rinkeby.infura.io/v3/5ffc47f65c4042ce847ef66a3fa70d4c',
+  explorer: 'https://testnet.bscscan.com'
+}; // const MAINNET_PROVIDER: _type.Web3Provider = {
+//   rpcUrl: process.env.BSC_MAINNET_PROVIDER || 'https://bsc-dataseed.binance.org/',
+//   explorer: process.env.BSC_MAINNET_PROVIDER || 'https://bscscan.com'
+// }
+
+const MAINNET_PROVIDER = {
+  rpcUrl: 'https://bsc-dataseed.binance.org/',
+  explorer: 'https://bscscan.com'
+};
+const network = {
+  mainnet: MAINNET_PROVIDER,
+  testnet: TESTNET_PROVIDER
+};
+const bep20 = new BEP20(network['mainnet'], BSC);
+console.log(bep20); // --------------------------
 
 export { BEP20, ERC20, SPL, SUFFIX_NFT_NETWORK };
 //# sourceMappingURL=index.esm.js.map

@@ -10,22 +10,10 @@ import { TOKEN_PROGRAM_ID } from "@solana/spl-token";
 export default class SPL extends Network {
   _provider: Connection;
 
-  constructor(config: _type.NetworkInfo) {
-    //
-    const native_token: _type.NativeToken = {
-      name: config.native_token.name, 
-      symbol: config.native_token.symbol, 
-      decimals: config.native_token.decimals, 
-      address: config.native_token.address
-    }
-    super(
-      config.name,
-      config.rpc_url,
-      config.chain_id,
-      config.symbol,
-      native_token,
-      config.explorer_url
-    );
+  constructor(web3_providers: _type.Web3Provider,
+    network_info: _type.NetworkInfo
+  ){
+    super(web3_providers, network_info);
     this._provider = new Connection(this.rpcURL);
   }
 

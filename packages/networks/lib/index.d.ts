@@ -2,6 +2,10 @@ import { Wallet } from '@ethersproject/wallet';
 import { SolanaWallet } from '@coreproject/wallets';
 import { Connection } from '@solana/web3.js';
 
+declare type Web3Provider = {
+    rpcUrl: string;
+    explorer: string;
+};
 declare type Contract = {
     name: string;
     symbol: string;
@@ -15,11 +19,8 @@ declare type NetworkInfo = {
     short_name: string;
     symbol: string;
     chain_id: number;
-    rpc_url: string;
-    explorer_url: string;
     wallet_derive_path: string;
     icon_url: string;
-    is_testnet?: boolean;
     native_token: {
         name: string;
         symbol: string;
@@ -57,13 +58,13 @@ declare type TransactionResponse = TransactionRequest & {
 };
 
 declare class Network {
+    nativeToken: NativeToken;
     name: string;
     rpcURL: string;
     chainID: number;
     symbol: string;
     explorerUrl: string;
-    nativeToken: NativeToken;
-    constructor(name: string, rpcURL: string, chainID: number, symbol: string, nativeToken: NativeToken, explorerUrl: string);
+    constructor(web3_provider: Web3Provider, network_info: NetworkInfo);
     getContractMetadata(contractAddress: string): Promise<Contract | null>;
     getBalance(address: string): Promise<string>;
     getSigner(wallet: any): any;
@@ -80,7 +81,7 @@ declare class Network {
 
 declare class ERC20 extends Network {
     _provider: any;
-    constructor(config: NetworkInfo);
+    constructor(web3_providers: Web3Provider, network_info: NetworkInfo);
     set provider(value: any);
     getContractMetadata(contractAddress: string): Promise<Contract>;
     getProvider(): any;
@@ -97,8 +98,8 @@ declare class ERC20 extends Network {
 
 declare class BEP20 extends Network {
     _provider: any;
-    constructor(config: NetworkInfo);
-    set provider(value: any);
+    constructor(web3_provider: Web3Provider, network_info: NetworkInfo);
+    newConfig(web3_provider: Web3Provider, network_info: NetworkInfo): void;
     getContractMetadata(contractAddress: string): Promise<Contract>;
     getProvider(): any;
     getBalance(address: string): Promise<string>;
@@ -113,7 +114,7 @@ declare class BEP20 extends Network {
 
 declare class SPL extends Network {
     _provider: Connection;
-    constructor(config: NetworkInfo);
+    constructor(web3_providers: Web3Provider, network_info: NetworkInfo);
     getContractMetadata(contractAddress: string): Promise<Contract | null>;
     getProvider(): Connection;
     getBalance(address: string): Promise<string>;

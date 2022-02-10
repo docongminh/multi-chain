@@ -3,8 +3,8 @@ import { Network } from "./Network";
 import * as _type from "./types";
 export default class BEP20 extends Network {
     _provider: any;
-    constructor(config: _type.NetworkInfo);
-    set provider(value: any);
+    constructor(web3_provider: _type.Web3Provider, network_info: _type.NetworkInfo);
+    newConfig(web3_provider: _type.Web3Provider, network_info: _type.NetworkInfo): void;
     getContractMetadata(contractAddress: string): Promise<_type.Contract>;
     getProvider(): any;
     getBalance(address: string): Promise<string>;
