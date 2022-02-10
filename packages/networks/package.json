@@ -1,6 +1,6 @@
 {
     "name": "@coreproject/networks",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "description": "Core base for Blockchain Network",
     "author": "@minhdocs",
     "main": "lib/index.commonjs.js",
@@ -20,7 +20,11 @@
         "type": "git",
         "url": "git+https://github.com/docongminh/base-core-wallet.git"
     },
-    "keywords": [],
+    "keywords": [
+        "multi-network",
+        "blockchain-network",
+        "dynamic-network"
+    ],
     "bugs": {
         "url": "https://github.com/docongminh/base-core-wallet/issues"
     },
